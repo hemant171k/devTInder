@@ -1,5 +1,0 @@
-$kind: http-request
-name: user
-url: localhost:3000/user
-method: POST
-order: 1458688838485108

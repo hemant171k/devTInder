@@ -1,33 +1,34 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
 const app = express();
+const User = require("./models/user");
 
-// Authorized admin login user usign middleware and then processed it to actual its respective route
-
-app.use("/", (err, req, res, next) => {
-  // this function not gonna work for error handling becuase express follows its order to resolve route handling
-  res.status(500).send("Something went wrong");
-});
-app.get("/admin/getAllData", (req, res) => {
-  throw new Error("error occured");
-  res.send("here get all user data");
-});
-app.get("/admin/deletUser", (req, res) => {
-  // error handling use try/catch
+app.post("/signup", async (req, res) => {
+  // Creating a new instance of the User model
+  const user = new User({
+    firstName: "Pramod",
+    lastName: "Sharma",
+    emailId: "pramodsharma@gmail.com",
+    mobileNo: 723538675,
+    password: "jdfhiaud87236",
+    age: "39",
+    gender: "M",
+  });
   try {
-    res.send("requested user deleted");
+    await user.save();
+    res.send("User created successfully");
   } catch (err) {
-    res.status(500).send(err);
+    console.log("error==>", err);
+    res.status(400).send("Error occured,try correct input data");
   }
 });
-
-app.use("/", (err, req, res, next) => {
-  // this function  gonna work for error and handles the error raised by /admin/getAllData
-  if (err) {
-    res.status(500).send(err);
-  }
-});
-
-app.listen(3000, () => {
-  console.log("server is listening on port 3000");
-});
+connectDB()
+  .then(() => {
+    console.log("database connected succsffully");
+    app.listen(3000, () => {
+      console.log("server is listening on port 3000");
+    });
+  })
+  .catch((err) => {
+    console.log("error occured , unable to connect to db");
+  });

@@ -1,5 +1,0 @@
-$kind: http-request
-name: user
-url: localhost:3000/user
-method: PATCH
-order: 1679422956884000
