@@ -3,23 +3,30 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 
+app.use( express.json());
 app.post("/signup", async (req, res) => {
-  // Creating a new instance of the User model
-  const user = new User({
-    firstName: "Pramod",
-    lastName: "Sharma",
-    emailId: "pramodsharma@gmail.com",
-    mobileNo: 723538675,
-    password: "jdfhiaud87236",
-    age: "39",
-    gender: "M",
-  });
+  console.log(req.body);
   try {
-    await user.save();
-    res.send("User created successfully");
+    // Creating a new instance of the User model
+    const user = new User({
+      firstName: "Pramod",
+      lastName: "Sharma",
+      emailId: "pramodsharma@gmail.com",
+      mobileNo: 723538675,
+      password: "jdfhiaud87236",
+      age: "39",
+      gender: "M",
+    });
+    try {
+      await user.save();
+      res.send("User created successfully");
+    } catch (err) {
+      console.log("error==>", err);
+      res.status(400).send("Error occured,try correct input data");
+    }
   } catch (err) {
-    console.log("error==>", err);
-    res.status(400).send("Error occured,try correct input data");
+    console.log(err);
+    res.send("error occured");
   }
 });
 connectDB()

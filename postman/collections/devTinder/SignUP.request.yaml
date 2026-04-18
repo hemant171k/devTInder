@@ -1,5 +1,17 @@
 $kind: http-request
 name: SignUP
-url: ""
-method: GET
+url: localhost:3000/signup
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "firstName": "Pramod",
+        "lastName": "Sharma",
+        "emailId": "pramodsharma@gmail.com",
+        "mobileNo": 723538675,
+        "password": "jdfhiaud87236",
+        "age": "39",
+        "gender": "M"
+      }
 order: 3824794853070076
